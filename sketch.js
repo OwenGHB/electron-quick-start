@@ -29,7 +29,7 @@ function newgraph(){
 		this.nodes.push(child);
 		this.nodes[nodeindex].children.push(this.nodes.length-1);
 	}
-	//find child nodes recursively
+	//find child nodes recursively - not used
 	graph.getdescendants=function(nodeindex){
 		var descendants=[];
 		for (child in nodes[nodeindex].children){
@@ -91,6 +91,8 @@ function newgraph(){
 				r:(Math.pow(2,-this.nodes[ancestors[i]].generation)),
 				theta:(2*Math.PI)*siblings.indexOf(ancestors[i])/(siblings.length)
 			}
+			//adjust theta in previous offset to make things line up better
+			offsets[offsets.length-1].theta+=offset.theta;
 			offsets.push(offset);
 		}
 		var totaloffset={
@@ -102,7 +104,7 @@ function newgraph(){
 			totaloffset.x += offsets[i].r*Math.cos(offsets[i].theta-Math.PI/2);
 			totaloffset.y += offsets[i].r*Math.sin(offsets[i].theta-Math.PI/2);
 		}
-		//finally translate those into screen coordinates
+		//finally translate those into screen coordinates, adjusting for initial offset
 		totaloffset.x=300*(1+totaloffset.x);
 		totaloffset.y=300*(2+totaloffset.y);
 		return totaloffset;
@@ -115,9 +117,9 @@ function newgraph(){
 		for (var i=0;i<this.nodes.length;i++){
 			var screenpos = this.getscreenpos(i);
 			var radius = 75/(this.nodes[i].generation+1);
-			var weight = 4;
-			if (i==this.currentnode) weight = 8;
-			sketchpad.innerHTML+='<circle cx="'+screenpos.x+'" cy="'+screenpos.y+'" r="'+radius+'" stroke="'+pallette[this.nodes[i].colour]+'" stroke-width="'+weight+'" fill="white" />';
+			var fill = "white";
+			if (i==this.currentnode) fill = pallette[this.nodes[i].colour];
+			sketchpad.innerHTML+='<circle cx="'+screenpos.x+'" cy="'+screenpos.y+'" r="'+radius+'" stroke="'+pallette[this.nodes[i].colour]+'" stroke-width="4" fill="'+fill+'" />';
 		}
 	}
 	return graph;
