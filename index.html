@@ -12,9 +12,9 @@
 	<div id="instructions">
 		using the numpad:<br/>
 		+ adds a child to the current node<br/>
-		/ changes the colour of the current node<br/>
+		Numpad5 changes the colour of the current node<br/>
 		Numpad8 moves up the tree to the parent node<br/>
-		Numpad6 moves down the tree to the first child<br/>
+		Numpad2 moves down the tree to the first child<br/>
 		Numpad4/Numpad6 cycle through the other children of the current node's parents<br/>
 	</div>
   </body>
@@ -47,7 +47,7 @@
 		case 43:
 			graph.spawnchild(graph.currentnode);
 			break;
-		case 47:
+		case 53:
 			graph.nodes[graph.currentnode].colour=(graph.nodes[graph.currentnode].colour+1)%3;
 			break;
 		default:
